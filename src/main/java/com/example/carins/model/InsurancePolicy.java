@@ -1,0 +1,42 @@
+package com.example.carins.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "insurancepolicy")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class InsurancePolicy {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Car car;
+
+    private String provider;
+
+    @NotNull(message = "Start date is required")
+    @Column(nullable = false)
+    private LocalDate startDate;
+
+    @NotNull(message = "End date is required")
+    @Column(nullable = false)
+    private LocalDate endDate;
+
+    public InsurancePolicy() {}
+    public InsurancePolicy(Car car, String provider, LocalDate startDate, LocalDate endDate) {
+        this.car = car; this.provider = provider; this.startDate = startDate; this.endDate = endDate;
+    }
+
+    public Long getId() { return id; }
+    public Car getCar() { return car; }
+    public void setCar(Car car) { this.car = car; }
+    public String getProvider() { return provider; }
+    public void setProvider(String provider) { this.provider = provider; }
+    public LocalDate getStartDate() { return startDate; }
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+    public LocalDate getEndDate() { return endDate; }
+    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+}
