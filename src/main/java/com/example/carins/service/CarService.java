@@ -24,8 +24,21 @@ public class CarService {
     }
 
     public boolean isInsuranceValid(Long carId, LocalDate date) {
-        if (carId == null || date == null) return false;
-        // TODO: optionally throw NotFound if car does not exist
+        if (carId == null || date == null) {
+            throw new IllegalArgumentException("Car ID and date cannot be null");
+        }
+        
+        // Validate that the car exists
+        if (!carRepository.existsById(carId)) {
+            throw new CarNotFoundException("Car with ID " + carId + " not found");
+        }
+        
         return policyRepository.existsActiveOnDate(carId, date);
+    }
+    
+    public static class CarNotFoundException extends RuntimeException {
+        public CarNotFoundException(String message) {
+            super(message);
+        }
     }
 }

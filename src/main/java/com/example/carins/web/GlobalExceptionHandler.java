@@ -1,6 +1,7 @@
 package com.example.carins.web;
 
 import com.example.carins.service.ClaimService;
+import com.example.carins.service.CarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,7 +35,14 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ClaimService.CarNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleCarNotFound(ClaimService.CarNotFoundException ex) {
+    public ResponseEntity<Map<String, String>> handleClaimServiceCarNotFound(ClaimService.CarNotFoundException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+    
+    @ExceptionHandler(CarService.CarNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleCarServiceCarNotFound(CarService.CarNotFoundException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);

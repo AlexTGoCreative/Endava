@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @RestController
@@ -30,10 +31,32 @@ public class CarController {
 
     @GetMapping("/cars/{carId}/insurance-valid")
     public ResponseEntity<?> isInsuranceValid(@PathVariable Long carId, @RequestParam String date) {
-        // TODO: validate date format and handle errors consistently
-        LocalDate d = LocalDate.parse(date);
-        boolean valid = service.isInsuranceValid(carId, d);
-        return ResponseEntity.ok(new InsuranceValidityResponse(carId, d.toString(), valid));
+        // Validate date format
+        LocalDate parsedDate;
+        try {
+            parsedDate = LocalDate.parse(date);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date format. Please use YYYY-MM-DD format.");
+        }
+        
+        // Validate date range - reject impossible dates
+        validateDateRange(parsedDate);
+        
+        boolean valid = service.isInsuranceValid(carId, parsedDate);
+        return ResponseEntity.ok(new InsuranceValidityResponse(carId, parsedDate.toString(), valid));
+    }
+    
+    private void validateDateRange(LocalDate date) {
+        // Define reasonable date boundaries
+        LocalDate minDate = LocalDate.of(1900, 1, 1);
+        LocalDate maxDate = LocalDate.of(2100, 12, 31);
+        
+        if (date.isBefore(minDate)) {
+            throw new IllegalArgumentException("Date cannot be before " + minDate);
+        }
+        if (date.isAfter(maxDate)) {
+            throw new IllegalArgumentException("Date cannot be after " + maxDate);
+        }
     }
 
     @GetMapping("/cars/{carId}/history")
