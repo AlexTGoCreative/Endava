@@ -10,6 +10,7 @@ C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\rep
 C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\service\CarHistoryService.java
 C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\service\CarService.java
 C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\service\ClaimService.java
+C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\service\PolicyExpirationScheduler.java
 C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\web\CarController.java
 C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\web\ClaimController.java
 C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\web\dto\CarDto.java
@@ -21,3 +22,4 @@ C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\web
 C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\web\dto\InsurancePolicyUpdateDto.java
 C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\web\GlobalExceptionHandler.java
 C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\web\InsurancePolicyController.java
+C:\Users\alexandru.tulbure\Documents\Endava\src\main\java\com\example\carins\web\SchedulerController.java

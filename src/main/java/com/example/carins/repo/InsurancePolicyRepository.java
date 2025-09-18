@@ -6,7 +6,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy, Long> {
@@ -22,4 +21,7 @@ public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy
     
     @Query("SELECT p FROM InsurancePolicy p WHERE p.car.id = :carId ORDER BY p.startDate ASC")
     List<InsurancePolicy> findByCarIdOrderByStartDateAsc(@Param("carId") Long carId);
+    
+    @Query("SELECT p FROM InsurancePolicy p WHERE p.endDate = :date")
+    List<InsurancePolicy> findByEndDate(@Param("date") LocalDate date);
 }
