@@ -2,7 +2,9 @@ package com.example.carins.web;
 
 import com.example.carins.model.Car;
 import com.example.carins.service.CarService;
+import com.example.carins.service.CarHistoryService;
 import com.example.carins.web.dto.CarDto;
+import com.example.carins.web.dto.CarHistoryEventDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +16,11 @@ import java.util.List;
 public class CarController {
 
     private final CarService service;
+    private final CarHistoryService historyService;
 
-    public CarController(CarService service) {
+    public CarController(CarService service, CarHistoryService historyService) {
         this.service = service;
+        this.historyService = historyService;
     }
 
     @GetMapping("/cars")
@@ -30,6 +34,12 @@ public class CarController {
         LocalDate d = LocalDate.parse(date);
         boolean valid = service.isInsuranceValid(carId, d);
         return ResponseEntity.ok(new InsuranceValidityResponse(carId, d.toString(), valid));
+    }
+
+    @GetMapping("/cars/{carId}/history")
+    public ResponseEntity<List<CarHistoryEventDto>> getCarHistory(@PathVariable Long carId) {
+        List<CarHistoryEventDto> history = historyService.getCarHistory(carId);
+        return ResponseEntity.ok(history);
     }
 
     private CarDto toDto(Car c) {
